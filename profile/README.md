@@ -1,43 +1,45 @@
 # ShiftLefter
 
-**ShiftLefter** is an open-source test runner and quality toolkit that puts **traceability and observability first**. It treats a test run as a stream of facts—validated, timestamped, and easy to diff—so you catch problems earlier and explain them faster. Built in Clojure, it’s designed for teams who want clean seams, reproducible results, and a clear story from requirements to releases. The runner speaks events, not language-specific APIs, so your step implementations can stay in your existing language (one per suite)—no rewrite to Clojure required. Early builds are under active development.
+Building BDD testing tools with **traceability and observability at the core**. Designed for teams who need clean seams, reproducible results, and a clear story from requirements to releases.
 
-## What ShiftLefter aims to provide
+## Current Status
 
-- **Traceability graph, end-to-end.** Model and navigate links from **requirements → prototypes → use cases → features → scenarios → checks**. Snapshot the graph per release so you can review impact (“what changed?”) in terms your PMs, auditors, and engineers actually care about.
+**v0.1.0 (December 2025):** [**shiftlefter**](https://github.com/SHIFT-LEFTER/shiftlefter) - 100% Cucumber-compatible Gherkin parser with lossless roundtrip guarantees. The foundation is solid: 268 tests, zero failures.
 
-- **Event-native runner.** Every action emits structured events to an observable hub (console/JSONL), enabling golden-file diffs, time-travel debugging, and lightweight analytics without bolting on yet another logger.
+**Next (January 2026):** Production CLI features (multi-file validation, in-place formatting, progress reporting).
 
-- **Language-agnostic step executors.** Step functions live in a single language of your choice—Java, JavaScript, Python, etc.—as long as they can speak the event protocol. The runner doesn’t force you into Clojure; it orchestrates and observes whatever step library you already have.
-
-- **Strict, legible configs.** Configs are validated with **clojure.spec** at load time—no silent coercions—so bad setups fail fast with precise “what and where” instead of mystery behavior halfway through a run.
-
-- **Deterministic by design.** Pluggable clock and ID sources (fixed seeds, anchored-monotonic, or real time) make runs reproducible across machines and CI, killing a whole class of flakiness.
-
-- **Clean seams: parser → binder → executor.** A pure Cucumber parser yields a normalized AST; a binder maps steps to functions; an executor runs them and emits step events. You can swap each layer without rewriting the whole suite.
-
-- **Preflight plan checks.** Plans are validated (shape + filesystem) before a run starts, so missing feature files, broken selectors, and bad filters are caught before CI burns a build.
-
-- **Adopt piecemeal, not all-or-nothing.** Start by dropping IDs and lightweight annotations into your existing codebase. Turn on optional enforcement gradually—labels first, use-case links next, full requirements mapping when you’re ready.
-
-- **Shared glossaries that can bite (if you want).** Maintain project glossaries for actors, users, domain nouns/verbs, and interfaces. Initially they’re advisory; later, toggle enforcement to flag unknown users, undefined nouns, or verb drift in specs and steps.
-
-- **Release diffs that mean something.** Beyond code and test diffs, see which **features and requirements** changed, how coverage shifted, and how key quality metrics compare to prior deployments—so product, QA, and engineering are looking at the same picture.
-
-- **Built for real teams.** Quiet CI runs, a simple CLI, humane errors, and a roadmap for **semi-automated checks** (human/LLM-in-the-loop) when binary pass/fail isn’t enough.
-
-Early builds are under active development. If you’re interested in early use or collaboration, open an issue or reach out.
+**Roadmap:** Event-native runner, traceability graph, macro expansion (`+` syntax for executable domain requirements).
 
 ---
 
-### About the project
+## Long-Term Vision
 
-ShiftLefter is being built by a career QA/SDET who has:
+ShiftLefter aims to solve the traceability problem that plagues real teams: spreadsheets and wikis standing in for actual requirement tracking, brittle test harnesses that can only report pass/fail, and no clear answer to "which requirements or workflows are actually at risk when this build goes red?"
 
-- Done manual and automated testing for everything from PC hardware and drivers (including WHQL certification) to network/security appliances, web apps, and payment systems
-- Run network and server infrastructure (mail, DNS, web, Cisco gear) for a few hundred users
-- Spent the last seven years in regulated healthcare and lab systems, where audits, traceability, and “what exactly broke for which patients?” are not hypothetical questions
+**What ShiftLefter will provide:**
 
-Across all of those, the patterns were the same: spreadsheets and wikis trying to stand in for real traceability, brittle Cucumber harnesses, and test runners that could only talk about pass/fail — not *which requirements, users, or workflows* were actually at risk.
+- **End-to-end traceability graph** linking requirements → prototypes → use cases → features → scenarios → test results. Snapshot the graph per release to review impact in terms stakeholders actually care about ("what changed and why does it matter?").
 
-ShiftLefter is an event-native runner and traceability toolkit that turns each test run into a stream of facts you can trace, diff, and explain — instead of just another mysterious red build — and is designed to be adopted gradually inside the messy systems teams already have.
+- **Language-agnostic execution** where step implementations can stay in your existing language (Java, Python, JavaScript, etc.). The runner orchestrates via events, not language-specific APIs - no rewrite required.
+
+- **Event-native runner** that treats test runs as observable streams of facts, not just pass/fail. Pluggable clock and seeded randomness enable time-travel testing (run tests "as if it's 2am" or "February 29th") and exact run reproduction for debugging. Enable golden-file diffs, time-travel debugging, and meaningful analytics without bolting on yet another logger.
+
+- **Executable domain requirements** via macro expansion (`Given Log in as admin +`). Bridge the gap between stakeholder language and executable tests with provenance tracking.
+
+- **Strict, validated configs** using clojure.spec - bad setups fail fast with precise "what and where" instead of mystery behavior halfway through a run.
+
+- **Gradual adoption** via optional enforcement. Start with lightweight annotations and IDs, turn on stricter validation (glossaries, requirement links) when you're ready.
+
+- **Release diffs that mean something.** Beyond code and test diffs, see which features and requirements changed, how coverage shifted, and how quality metrics compare to prior deployments.
+
+Built for real teams working in messy, regulated environments where "what exactly broke for which patients/customers/users?" isn't a hypothetical question.
+
+---
+
+### About the Project
+
+ShiftLefter is being built by a QA professional with 25 years across dramatically different domains - from hardware drivers and network infrastructure to payment systems and regulated healthcare, from startups to Fortune 500s, from manual testing to full-stack automation.
+
+Across all of them, the patterns were the same: requirements lived in spreadsheets and wikis instead of being traceable artifacts, test runners could only say "red" or "green" without explaining *which requirements or workflows* were at risk, and traceability was something teams talked about wanting but couldn't actually achieve with existing tools.
+
+ShiftLefter is built to make requirements traceability and test observability accessible to real teams working in messy, real-world codebases - not just to people building greenfield systems with perfect processes.
